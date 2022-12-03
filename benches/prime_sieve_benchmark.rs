@@ -1,4 +1,5 @@
-﻿use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, Throughput, Bencher};
+﻿use std::time::Duration;
+use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, Throughput, Bencher};
 use prime_sieve::singlethreaded;
 
 fn criterion_benchmark(c: &mut Criterion) {
@@ -17,6 +18,8 @@ fn criterion_benchmark(c: &mut Criterion) {
 
 fn benchmark_sieve(c: &mut Criterion, group_name: &str, to_bench: fn(&mut Bencher, &i32)) {
     let mut group = c.benchmark_group(group_name);
+    group.measurement_time(Duration::from_secs(10));
+    group.sample_size(400);
     /*for magnitude in 1..=6 {*/
     let magnitude = 6;
         let search_up_to = 10_i32.pow(magnitude);
