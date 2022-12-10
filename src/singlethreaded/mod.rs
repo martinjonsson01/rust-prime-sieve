@@ -1,4 +1,5 @@
-﻿use std::fs;
+﻿#[cfg(test)]
+use std::fs;
 
 pub mod basic;
 pub mod optimized;
@@ -10,6 +11,7 @@ fn collect_marked(values: Vec<i32>, marks: Vec<bool>) -> Vec<i32> {
         .map(|(value, _)| *value).collect()
 }
 
+#[cfg(test)]
 fn load_primes(path: String, search_up_to: i32) -> Vec<i32> {
     let content = fs::read_to_string(path).expect("Could not find file");
     content.lines().filter_map(|text: &str| {
