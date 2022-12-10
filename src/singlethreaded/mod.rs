@@ -2,6 +2,7 @@
 
 pub mod basic;
 pub mod optimized;
+pub mod atkins;
 
 fn collect_marked(values: Vec<i32>, marks: Vec<bool>) -> Vec<i32> {
     values.iter().zip(marks.iter())
@@ -26,7 +27,8 @@ mod tests {
 
     fn sieves() -> Vec<fn(i32) -> Vec<i32>> {
         vec![crate::singlethreaded::basic::find_primes,
-             crate::singlethreaded::optimized::find_primes]
+             crate::singlethreaded::optimized::find_primes,
+             crate::singlethreaded::atkins::find_primes]
     }
 
     #[test]

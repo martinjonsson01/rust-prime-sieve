@@ -1,18 +1,8 @@
-﻿#[derive(Copy, Clone, PartialEq)]
-struct Number {
-    value: i32,
-    is_prime: bool,
-}
-
-impl Number {
-    fn new(number: i32) -> Self {
-        Number { value: number, is_prime: true }
-    }
-}
+﻿use crate::Number;
 
 pub fn find_primes(search_up_to: i32) -> Vec<i32> {
     let mut numbers: Vec<Number> = (2..=search_up_to)
-        .map(Number::new)
+        .map(|n| Number::new(n, true))
         .collect();
     let mut next_prime: Option<Number> = Some(numbers[0]);
     while let Some(prime) = next_prime {
