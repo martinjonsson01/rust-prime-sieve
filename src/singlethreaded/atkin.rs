@@ -3,24 +3,6 @@
 pub fn find_primes(search_up_to: i32) -> Vec<i32> {
     let mut sieve: Vec<Number> = (0..=search_up_to).map(|n| Number::new(n, false)).collect();
 
-    flip_primes(search_up_to, &mut sieve);
-
-    mark_prime_squares(search_up_to, &mut sieve);
-
-    collect_primes(search_up_to, &mut sieve)
-}
-
-fn collect_primes(search_up_to: i32, sieve: &mut [Number]) -> Vec<i32> {
-    let mut primes = vec![2, 3];
-    for n in 5..=search_up_to {
-        if sieve[n as usize].is_prime {
-            primes.push(n);
-        }
-    }
-    primes
-}
-
-fn flip_primes(search_up_to: i32, sieve: &mut [Number]) {
     for x in (1..=search_up_to).take_while(|x| x.pow(2) <= search_up_to) {
         for y in (1..=search_up_to).take_while(|y| y.pow(2) <= search_up_to) {
             //condition one
@@ -40,9 +22,7 @@ fn flip_primes(search_up_to: i32, sieve: &mut [Number]) {
             }
         }
     }
-}
 
-fn mark_prime_squares(search_up_to: i32, sieve: &mut [Number]) {
     for r in (5_i32..).take_while(|r: &i32| r.pow(2) <= search_up_to) {
         if !sieve[r as usize].is_prime {
             continue;
@@ -52,4 +32,12 @@ fn mark_prime_squares(search_up_to: i32, sieve: &mut [Number]) {
             sieve[i as usize].is_prime = false;
         }
     }
+
+    let mut primes = vec![2, 3];
+    for n in 5..=search_up_to {
+        if sieve[n as usize].is_prime {
+            primes.push(n);
+        }
+    }
+    primes
 }

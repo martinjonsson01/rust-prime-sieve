@@ -37,5 +37,9 @@ fn benchmark_sieve(c: &mut Criterion, group_name: &str, to_bench: fn(&mut Benche
     group.finish();
 }
 
-criterion_group!(benches, criterion_benchmark);
+criterion_group!{
+    name = benches;
+    config = Criterion::default();
+    targets = criterion_benchmark
+}
 criterion_main!(benches);

@@ -1,9 +1,9 @@
 ﻿<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Run in release" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
-    <option name="command" value="run --package prime-sieve --bin prime-sieve --release" />
+  <configuration default="false" name="bench profile" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+    <option name="command" value="bench --bench prime_sieve_benchmark -- --profile-time 100" />
     <option name="workingDirectory" value="file://$PROJECT_DIR$" />
     <option name="channel" value="DEFAULT" />
-    <option name="requiredFeatures" value="true" />
+    <option name="requiredFeatures" value="false" />
     <option name="allFeatures" value="false" />
     <option name="emulateTerminal" value="false" />
     <option name="withSudo" value="false" />
@@ -14,6 +14,7 @@
     <option name="redirectInputPath" value="" />
     <method v="2">
       <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      <option name="RunConfigurationTask" enabled="false" run_configuration_name="Test singlethreaded::tests" run_configuration_type="CargoCommandRunConfiguration" />
     </method>
   </configuration>
 </component>
