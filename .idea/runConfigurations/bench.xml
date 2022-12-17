@@ -1,4 +1,4 @@
-﻿<component name="ProjectRunConfigurationManager">
+<component name="ProjectRunConfigurationManager">
   <configuration default="false" name="bench" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
     <option name="command" value="bench" />
     <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -9,7 +9,9 @@
     <option name="withSudo" value="false" />
     <option name="buildTarget" value="REMOTE" />
     <option name="backtrace" value="SHORT" />
-    <envs />
+    <envs>
+      <env name="RUSTFLAGS" value="-C target-cpu=native" />
+    </envs>
     <option name="isRedirectInput" value="false" />
     <option name="redirectInputPath" value="" />
     <method v="2">
