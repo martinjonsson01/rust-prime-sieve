@@ -31,12 +31,16 @@ jobs:
           key: ${{ runner.os }}-cargo-bench-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-bench-
 
+      - run: cargo -V
+
       - name: Install minimal nightly with clippy and rustfmt
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: nightly
           override: true
+
+      - run: cargo -V
 
       - uses: boa-dev/criterion-compare-action@v3
         with:
