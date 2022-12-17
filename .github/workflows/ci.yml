@@ -26,10 +26,7 @@ jobs:
         with:
           shared-key: rust-pipeline
 
-      - uses: qernal/github-actions-rust-clippy@v2.0.0
-        with:
-          clippy_args: -- -D warnings
-          rust_version: nightly
+      - run: cargo clippy --all-targets --all-features -- -D warnings
 
       - run: cargo build --verbose
 
