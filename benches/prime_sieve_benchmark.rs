@@ -29,7 +29,6 @@ fn benchmark_sieve(c: &mut Criterion, group_name: &str, to_bench: fn(&mut Benche
     /*for magnitude in 1..=6 {*/
     let magnitude = 6;
         let search_up_to = 10_i32.pow(magnitude);
-        group.throughput(Throughput::Elements(search_up_to as u64));
         group.bench_with_input(BenchmarkId::from_parameter(format!("10^{magnitude:?}")),
                                &search_up_to,
                                to_bench);
