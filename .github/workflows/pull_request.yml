@@ -1,8 +1,6 @@
-﻿name: Cargo Build & Test
+﻿name: Performance regression check
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
     branches:
       - master
