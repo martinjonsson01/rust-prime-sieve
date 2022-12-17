@@ -1,5 +1,5 @@
 ﻿use std::time::Duration;
-use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, Throughput, Bencher};
+use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, Bencher};
 use prime_sieve::singlethreaded;
 
 fn criterion_benchmark(c: &mut Criterion) {
