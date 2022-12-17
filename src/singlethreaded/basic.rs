@@ -14,7 +14,7 @@ pub fn find_primes(search_up_to: i32) -> Vec<i32> {
         let mut numbers_greater_than_prime = (prime + 1)..=search_up_to;
         next_prime = numbers_greater_than_prime.find(|number| is_prime[*number as usize]);
     }
-    collect_marked(numbers, is_prime)
+    collect_marked(&numbers, &is_prime)
 }
 
 #[cfg(test)]

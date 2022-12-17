@@ -5,7 +5,7 @@ pub mod basic;
 pub mod optimized;
 pub mod atkin;
 
-fn collect_marked(values: Vec<i32>, marks: Vec<bool>) -> Vec<i32> {
+fn collect_marked(values: &[i32], marks:&[bool]) -> Vec<i32> {
     values.iter().zip(marks.iter())
         .filter(|(_, mark)| **mark)
         .map(|(value, _)| *value).collect()
