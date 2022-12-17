@@ -39,6 +39,8 @@ jobs:
           override: true
           default: true
 
+      - run: /home/runner/.cargo/bin/cargo -V
+
       - uses: boa-dev/criterion-compare-action@v3
         with:
           # The name of the branch to compare with.
