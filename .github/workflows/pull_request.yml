@@ -27,16 +27,21 @@ jobs:
             ~/.cargo/registry/index/
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
+            ~/.cargo/.crates.toml
+            ~/.cargo/.crates2.json
             target/
           key: ${{ runner.os }}-cargo-bench-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-bench-
 
-      - name: Install minimal nightly with clippy and rustfmt
+      - name: Install minimal nightly
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: nightly
           override: true
+          default: true
+
+      - run: /home/runner/.cargo/bin/cargo -V
 
       - uses: boa-dev/criterion-compare-action@v3
         with:
