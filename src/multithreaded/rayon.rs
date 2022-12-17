@@ -25,10 +25,7 @@ pub fn find_primes(search_up_to: i32) -> Vec<i32> {
     let mut next_prime: Option<Number> = Some(numbers[2]);
     while let Some(prime) = next_prime {
         // The multiples of p that are smaller than p^2 are already marked.
-        let start_multiple = match prime.value.checked_mul(prime.value) {
-            None => break, // If outside of range for i32, then there's nothing left to sieve.
-            Some(product) => product,
-        };
+        let start_multiple = prime.value.pow(2);
         if start_multiple > search_up_to {
             break;
         }
