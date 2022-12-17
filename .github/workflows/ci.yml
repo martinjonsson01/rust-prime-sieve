@@ -1,0 +1,81 @@
+name: Cargo Build & Test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches:
+      - master
+      - '*'
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - run: rustup update
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: rust-pipeline-${{ github.run_id }}
+
+      - uses: qernal/github-actions-rust-clippy@v2.0.0
+        with:
+          clippy_args: -D warnings
+
+      - run: cargo build --verbose
+
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [ build ]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: rust-pipeline-${{ github.run_id }}
+
+      - run: cargo test --verbose
+
+  bench:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [ build ]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: rust-pipeline-${{ github.run_id }}
+
+      - name: Run benchmark
+        run: cargo +nightly bench | tee output.txt
+
+      - name: Download previous benchmark data
+        uses: actions/cache@v3
+        with:
+          path: ./cache
+          key: ${{ runner.os }}-benchmark
+
+      - name: Store benchmark result
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          tool: 'cargo'
+          # Where the output from the benchmark tool is stored
+          output-file-path: output.txt
+          # Where the previous data file is stored
+          external-data-json-path: ./cache/benchmark-data.json
+          fail-on-alert: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          comment-on-alert: true
+          alert-comment-cc-users: '@martinjonsson01'
