@@ -22,9 +22,18 @@ jobs:
 
       - run: rustup toolchain install nightly -c clippy  -- && rustup default nightly
 
-      - uses: Swatinem/rust-cache@v2
+      - name: Set up cargo cache
+        uses: actions/cache@v3
+        continue-on-error: false
         with:
-          shared-key: pipeline # Share cache between runs
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-
 
       - run: cargo clippy --all-targets --all-features -- -D warnings
 
@@ -40,9 +49,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: Swatinem/rust-cache@v2
+      - name: Set up cargo cache
+        uses: actions/cache@v3
+        continue-on-error: false
         with:
-          shared-key: pipeline # Share cache between runs
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-
 
       - run: cargo test --verbose
 
@@ -54,9 +72,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: Swatinem/rust-cache@v2
+      - name: Set up cargo cache
+        uses: actions/cache@v3
+        continue-on-error: false
         with:
-          shared-key: pipeline # Share cache between runs
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-
 
       - name: Run benchmark
         run: cargo +nightly bench | tee output.txt
