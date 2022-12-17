@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Test singlethreaded::tests" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
-    <option name="command" value="test --package prime-sieve" />
+  <configuration default="false" name="Test singlethreaded tests" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
+    <option name="command" value="test --package prime-sieve --target x86_64-pc-windows-msvc" />
     <option name="workingDirectory" value="file://$PROJECT_DIR$" />
     <option name="channel" value="DEFAULT" />
     <option name="requiredFeatures" value="true" />
