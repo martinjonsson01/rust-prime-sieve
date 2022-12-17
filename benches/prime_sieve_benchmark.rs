@@ -12,6 +12,8 @@ fn criterion_benchmark(c: &mut Criterion) {
     let group_name = "single-threaded optimized prime sieve";
     let to_bench = |bencher: &mut Bencher, search_up_to: &i32| {
         bencher.iter(|| singlethreaded::optimized::find_primes(*search_up_to));
+        bencher.iter(|| singlethreaded::optimized::find_primes(*search_up_to));
+        bencher.iter(|| singlethreaded::optimized::find_primes(*search_up_to));
     };
     benchmark_sieve(c, group_name, to_bench);
     
