@@ -16,3 +16,4 @@ repos:
       - id: fmt
       - id: cargo-check
       - id: clippy
+        args: [ '--color', 'always', '--all-targets','--all-features','--','-D','warnings' ]
