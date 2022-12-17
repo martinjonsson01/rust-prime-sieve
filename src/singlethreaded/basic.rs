@@ -1,4 +1,4 @@
-﻿use crate::singlethreaded::collect_marked;
+use crate::singlethreaded::collect_marked;
 
 /// Finds all of the prime numbers that exist up to the given limit.
 ///

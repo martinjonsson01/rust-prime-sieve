@@ -1,4 +1,4 @@
-﻿<component name="ProjectRunConfigurationManager">
+<component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Doctest of prime-sieve" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
     <option name="command" value="test --package prime-sieve --doc" />
     <option name="workingDirectory" value="file://$PROJECT_DIR$" />

@@ -1,4 +1,4 @@
-﻿<component name="ProjectRunConfigurationManager">
+<component name="ProjectRunConfigurationManager">
   <configuration default="false" name="bench profile" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
     <option name="command" value="bench --bench prime_sieve_benchmark -- --profile-time 100" />
     <option name="workingDirectory" value="file://$PROJECT_DIR$" />

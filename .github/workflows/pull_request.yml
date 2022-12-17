@@ -1,4 +1,4 @@
-﻿name: Performance regression check
+name: Performance regression check
 
 on:
   pull_request:

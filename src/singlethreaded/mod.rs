@@ -1,29 +1,33 @@
-﻿#[cfg(test)]
+#[cfg(test)]
 use std::fs;
 
+/// A basic Sieve of Atkin.
+pub mod atkin;
 /// A basic Sieve of Eratosthenes.
 pub mod basic;
 /// An optimized Sieve of Eratosthenes.
 pub mod optimized;
-/// A basic Sieve of Atkin.
-pub mod atkin;
 
-fn collect_marked(values: &[i32], marks:&[bool]) -> Vec<i32> {
-    values.iter().zip(marks.iter())
+fn collect_marked(values: &[i32], marks: &[bool]) -> Vec<i32> {
+    values
+        .iter()
+        .zip(marks.iter())
         .filter(|(_, mark)| **mark)
-        .map(|(value, _)| *value).collect()
+        .map(|(value, _)| *value)
+        .collect()
 }
 
 #[cfg(test)]
 fn load_primes(path: String, search_up_to: i32) -> Vec<i32> {
     let content = fs::read_to_string(path).expect("Could not find file");
-    content.lines().filter_map(|text: &str| {
-        match text.parse::<i32>() {
+    content
+        .lines()
+        .filter_map(|text: &str| match text.parse::<i32>() {
             Ok(prime) if prime > search_up_to => None,
             Ok(prime) if prime <= search_up_to => Some(prime),
-            _ => panic!("Could not parse {text:?} to i32")
-        }
-    }).collect()
+            _ => panic!("Could not parse {text:?} to i32"),
+        })
+        .collect()
 }
 
 #[cfg(test)]
@@ -31,9 +35,11 @@ mod tests {
     use crate::singlethreaded::load_primes;
 
     fn sieves() -> Vec<fn(i32) -> Vec<i32>> {
-        vec![crate::singlethreaded::basic::find_primes,
-             crate::singlethreaded::optimized::find_primes,
-             crate::singlethreaded::atkin::find_primes]
+        vec![
+            crate::singlethreaded::basic::find_primes,
+            crate::singlethreaded::optimized::find_primes,
+            crate::singlethreaded::atkin::find_primes,
+        ]
     }
 
     #[test]
