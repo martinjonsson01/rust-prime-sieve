@@ -1,8 +1,11 @@
 ﻿#[cfg(test)]
 use std::fs;
 
+/// A basic Sieve of Eratosthenes.
 pub mod basic;
+/// An optimized Sieve of Eratosthenes.
 pub mod optimized;
+/// A basic Sieve of Atkin.
 pub mod atkin;
 
 fn collect_marked(values: &[i32], marks:&[bool]) -> Vec<i32> {

@@ -1,3 +1,17 @@
+//! A collection of different prime sieves, with varying levels of optimization and concurrency.
+//!
+//! There are two main modules:
+//! - ['singlethreaded']
+//! - (todo) ['multithreaded']
+//!
+//! # Examples
+//! ```
+//! use prime_sieve::singlethreaded;
+//!
+//! let search_up_to = 1_000_000;
+//! let primes: Vec<i32> = singlethreaded::optimized::find_primes(search_up_to);
+//! ```
+
 #![feature(strict_provenance)]
 // rustc lints
 #![warn(
@@ -27,6 +41,7 @@
     clippy::unwrap_used
 )]
 
+/// All single-threaded prime sieve implementations.
 pub mod singlethreaded;
 
 #[derive(Copy, Clone, PartialEq)]
