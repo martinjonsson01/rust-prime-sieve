@@ -1,4 +1,7 @@
+use crate::singlethreaded::optimized::mark_primes;
 use rayon::prelude::*;
+
+const CHUNK_SIZE: usize = 100_000;
 
 /// Concurrently finds all of the prime numbers that exist up to the given limit.
 ///
@@ -12,33 +15,32 @@ use rayon::prelude::*;
 /// let primes: Vec<i32> = find_primes(1_000_000);
 /// ```
 pub fn find_primes(search_up_to: i32) -> Vec<i32> {
-    let cpus = num_cpus::get_physical();
-    let numbers_per_thread = (search_up_to as usize) / cpus;
-    let mut marks: Vec<bool> = (0..=search_up_to).map(|_| true).collect();
-    marks[0] = false;
-    marks[1] = false;
-    let mut next_prime: Option<i32> = Some(2_i32);
-    while let Some(prime) = next_prime {
-        // The multiples of p that are smaller than p^2 are already marked.
-        let start_multiple = prime.pow(2);
-        if start_multiple > search_up_to {
-            break;
-        }
+    // Faster to find small primes sequentially.
+    let small_max = (search_up_to as f64).sqrt().ceil() as i32;
+    let mut marks: Vec<bool> = mark_primes(small_max);
+    marks.resize(search_up_to as usize, true);
 
-        marks
-            .par_iter_mut()
-            .with_min_len(numbers_per_thread)
-            .skip(start_multiple as usize)
-            .step_by(prime as usize)
-            .for_each(|is_prime| *is_prime = false);
+    let (small_marks, large_marks) = marks.split_at_mut(small_max as usize);
+    let small_marks = &*small_marks;
 
-        next_prime = marks
-            .par_iter()
-            .with_min_len(numbers_per_thread)
-            .enumerate()
-            .find_first(|(number, &is_prime)| *number as i32 > prime && is_prime)
-            .map(|(number, _is_prime)| number as i32);
-    }
+    large_marks
+        .par_chunks_mut(CHUNK_SIZE)
+        .enumerate()
+        .for_each(|(chunk_index, chunk)| {
+            let start = chunk_index * CHUNK_SIZE + small_max as usize;
+            let end = start + chunk.len();
+            small_marks
+                .iter()
+                .enumerate()
+                .filter(|(_, &is_prime)| is_prime)
+                .flat_map(|(prime, _)| {
+                    (prime..end)
+                        .step_by(prime)
+                        .skip_while(|&number| number < start)
+                })
+                .for_each(|not_prime| chunk[not_prime - start] = false);
+        });
+
     collect_marked(marks)
 }
 
