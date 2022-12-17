@@ -1,5 +1,5 @@
 use criterion::{criterion_group, criterion_main, Bencher, BenchmarkId, Criterion};
-use prime_sieve::singlethreaded;
+use prime_sieve::multithreaded;
 use std::time::Duration;
 
 fn criterion_benchmark(c: &mut Criterion) {
@@ -9,15 +9,21 @@ fn criterion_benchmark(c: &mut Criterion) {
     };
     benchmark_sieve(c, group_name, to_bench);*/
 
-    let group_name = "single-threaded optimized prime sieve";
+    /*let group_name = "single-threaded optimized prime sieve";
     let to_bench = |bencher: &mut Bencher, search_up_to: &i32| {
         bencher.iter(|| singlethreaded::optimized::find_primes(*search_up_to));
     };
-    benchmark_sieve(c, group_name, to_bench);
+    benchmark_sieve(c, group_name, to_bench);*/
 
-    let group_name = "single-threaded atkins prime sieve";
+    /*let group_name = "single-threaded atkins prime sieve";
     let to_bench = |bencher: &mut Bencher, search_up_to: &i32| {
         bencher.iter(|| singlethreaded::atkin::find_primes(*search_up_to));
+    };
+    benchmark_sieve(c, group_name, to_bench);*/
+
+    let group_name = "multi-threaded rayon prime sieve";
+    let to_bench = |bencher: &mut Bencher, search_up_to: &i32| {
+        bencher.iter(|| multithreaded::rayon::find_primes(*search_up_to));
     };
     benchmark_sieve(c, group_name, to_bench);
 }
@@ -25,9 +31,9 @@ fn criterion_benchmark(c: &mut Criterion) {
 fn benchmark_sieve(c: &mut Criterion, group_name: &str, to_bench: fn(&mut Bencher, &i32)) {
     let mut group = c.benchmark_group(group_name);
     group.measurement_time(Duration::from_secs(10));
-    group.sample_size(400);
+    group.sample_size(40);
     /*for magnitude in 1..=6 {*/
-    let magnitude = 6;
+    let magnitude = 8;
     let search_up_to = 10_i32.pow(magnitude);
     group.bench_with_input(
         BenchmarkId::from_parameter(format!("10^{magnitude:?}")),
