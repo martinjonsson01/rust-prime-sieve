@@ -24,7 +24,7 @@ jobs:
 
       - uses: Swatinem/rust-cache@v2
         with:
-          shared-key: rust-pipeline
+          shared-key: "" # Share cache between runs
 
       - run: cargo clippy --all-targets --all-features -- -D warnings
 
@@ -40,7 +40,7 @@ jobs:
 
       - uses: Swatinem/rust-cache@v2
         with:
-          shared-key: rust-pipeline-${{ github.run_id }}
+          shared-key: "" # Share cache between runs
 
       - run: cargo test --verbose
 
@@ -54,7 +54,7 @@ jobs:
 
       - uses: Swatinem/rust-cache@v2
         with:
-          shared-key: rust-pipeline
+          shared-key: "" # Share cache between runs
 
       - name: Run benchmark
         run: cargo +nightly bench | tee output.txt
